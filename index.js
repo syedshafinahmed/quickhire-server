@@ -45,19 +45,34 @@ async function run() {
       }
     });
 
-    // Endpoint to retrieve all job postings
+    // Endpoint to retrieve all job postings with optional search and category filters
     app.get("/jobs", async (req, res) => {
       try {
+        const { search, category } = req.query;
+
+        const query = {};
+
+        // Search by title or company
+        if (search) {
+          query.$or = [
+            { title: { $regex: search, $options: "i" } },
+            { company: { $regex: search, $options: "i" } },
+          ];
+        }
+
+        // Filter by category
+        if (category && category !== "all") {
+          query.category = category;
+        }
+
         const jobs = await jobsCollection
-          .find()
+          .find(query)
           .sort({ created_at: -1 })
           .toArray();
-        res.status(200).json(jobs);
+
+        res.send(jobs);
       } catch (err) {
-        console.error(err);
-        res
-          .status(500)
-          .json({ success: false, message: "Failed to fetch jobs" });
+        res.status(500).send({ error: "Failed to fetch jobs" });
       }
     });
 
