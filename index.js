@@ -104,6 +104,29 @@ async function run() {
       }
     });
 
+    // Endpoint to update a job posting by ID
+    app.put("/jobs/:id", async (req, res) => {
+      try {
+        const id = req.params.id;
+
+        if (!ObjectId.isValid(id)) {
+          return res.status(400).json({ error: "Invalid job ID" });
+        }
+
+        const { _id, ...updatedJob } = req.body;
+
+        const result = await jobsCollection.updateOne(
+          { _id: new ObjectId(id) },
+          { $set: updatedJob },
+        );
+
+        res.json({ success: true, modified: result.modifiedCount });
+      } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Failed to update job" });
+      }
+    });
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log(
