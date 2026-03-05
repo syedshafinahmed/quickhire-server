@@ -1,12 +1,13 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
 const port = 3000;
 require("dotenv").config();
-
+app.use(express.json());
+app.use(cors());
 
 const { MongoClient, ServerApiVersion } = require("mongodb");
-const uri =
-  `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@zyra.l75hwjs.mongodb.net/?appName=Zyra`;
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@zyra.l75hwjs.mongodb.net/?appName=Zyra`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -21,6 +22,88 @@ async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
+
+    const db = client.db("hirebd");
+    const jobsCollection = db.collection("jobs");
+
+    // Endpoint to handle job postings
+    app.post("/jobs", async (req, res) => {
+      try {
+        console.log("Incoming job:", req.body);
+
+        const result = await jobsCollection.insertOne({
+          ...req.body,
+          created_at: new Date(),
+        });
+
+        console.log("Inserted ID:", result.insertedId);
+
+        res.status(201).json({ success: true });
+      } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false });
+      }
+    });
+
+    // Endpoint to retrieve all job postings
+    app.get("/jobs", async (req, res) => {
+      try {
+        const jobs = await jobsCollection
+          .find()
+          .sort({ created_at: -1 })
+          .toArray();
+        res.status(200).json(jobs);
+      } catch (err) {
+        console.error(err);
+        res
+          .status(500)
+          .json({ success: false, message: "Failed to fetch jobs" });
+      }
+    });
+
+    // Endpoint to retrieve a specific job posting by ID
+    const { ObjectId } = require("mongodb");
+
+    app.get("/jobs/:id", async (req, res) => {
+      try {
+        const id = req.params.id;
+
+        // Validate ObjectId
+        if (!ObjectId.isValid(id)) {
+          return res.status(400).json({ error: "Invalid job ID" });
+        }
+
+        const job = await jobsCollection.findOne({ _id: new ObjectId(id) });
+
+        if (!job) return res.status(404).json({ error: "Job not found" });
+
+        res.json(job);
+      } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Server error" });
+      }
+    });
+
+    // Endpoint to delete a job posting by ID
+    app.delete("/jobs/:id", async (req, res) => {
+      try {
+        const id = req.params.id;
+
+        if (!ObjectId.isValid(id)) {
+          return res.status(400).json({ error: "Invalid job ID" });
+        }
+
+        const result = await jobsCollection.deleteOne({
+          _id: new ObjectId(id),
+        });
+
+        res.json({ success: true, result });
+      } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Failed to delete job" });
+      }
+    });
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log(
