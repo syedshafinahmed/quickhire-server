@@ -26,6 +26,45 @@ async function run() {
     const db = client.db("hirebd");
     const jobsCollection = db.collection("jobs");
     const usersCollection = db.collection("users");
+    const applicationsCollection = db.collection("applications");
+
+    // Apply for a job
+    app.post("/applications", async (req, res) => {
+      try {
+        const {
+          jobId,
+          jobTitle,
+          company,
+          applicantName,
+          applicantEmail,
+          resumeLink,
+          coverLetter,
+        } = req.body;
+
+        if (!jobId || !applicantName || !applicantEmail) {
+          return res.status(400).json({ error: "Missing required fields" });
+        }
+
+        const result = await applicationsCollection.insertOne({
+          jobId,
+          jobTitle,
+          company,
+          applicantName,
+          applicantEmail,
+          resumeLink,
+          coverLetter,
+          created_at: new Date(),
+        });
+
+        res.status(201).json({
+          success: true,
+          applicationId: result.insertedId,
+        });
+      } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Failed to submit application" });
+      }
+    });
 
     // Register user endpoint
     app.post("/users", async (req, res) => {
