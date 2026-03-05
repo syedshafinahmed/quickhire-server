@@ -25,6 +25,53 @@ async function run() {
 
     const db = client.db("hirebd");
     const jobsCollection = db.collection("jobs");
+    const usersCollection = db.collection("users");
+
+    // Register user endpoint
+    app.post("/users", async (req, res) => {
+      try {
+        const { name, email, photoURL } = req.body;
+
+        if (!name || !email) {
+          return res.status(400).json({ error: "Name and email are required" });
+        }
+
+        const existingUser = await usersCollection.findOne({ email });
+        if (existingUser) {
+          return res.status(400).json({ error: "User already registered" });
+        }
+
+        const result = await usersCollection.insertOne({
+          name,
+          email,
+          photoURL: photoURL || "https://via.placeholder.com/150",
+          created_at: new Date(),
+        });
+
+        res.status(201).json({ success: true, userId: result.insertedId });
+      } catch (err) {
+        console.error(err);
+        res
+          .status(500)
+          .json({ success: false, error: "Failed to register user" });
+      }
+    });
+
+    // Get user by email endpoint
+    app.get("/users", async (req, res) => {
+      try {
+        const { email } = req.query;
+        if (!email) return res.status(400).json({ error: "Email is required" });
+
+        const user = await usersCollection.findOne({ email });
+        if (!user) return res.status(404).json({ error: "User not found" });
+
+        res.json(user);
+      } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Server error" });
+      }
+    });
 
     // Endpoint to handle job postings
     app.post("/jobs", async (req, res) => {
