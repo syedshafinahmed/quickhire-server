@@ -5,11 +5,11 @@ A RESTful API server built with **Node.js**, **Express**, and **MongoDB** for a 
 
 <div align="center" style="text-align:center;">
 
-[![Express.js](https://img.shields.io/badge/Express.js-Server-444444?style=flat-square&logo=express&logoColor=white)](https://expressjs.com/)
-[![Node.js](https://img.shields.io/badge/Node.js-Backend-339933?style=flat-square&logo=node.js&logoColor=339933)](https://nodejs.org/)
-[![MongoDB](https://img.shields.io/badge/MongoDB-Database-47A248?style=flat-square&logo=mongodb&logoColor=47A248)](https://mongodb.com/)
-[![dotenv](https://img.shields.io/badge/dotenv-Environment-ECD53F?style=flat-square&logo=dotenv&logoColor=ECD53F)](https://www.npmjs.com/package/dotenv)
-[![express.json](https://img.shields.io/badge/express.json-Middleware-F7DF1E?style=flat-square&logo=javascript&logoColor=F7DF1E)](https://expressjs.com/)
+[![Express.js](https://img.shields.io/badge/Express.js-5.1.0-444444?style=flat-square&logo=express&logoColor=white)](https://expressjs.com/)
+[![Node.js](https://img.shields.io/badge/Node.js-25.8.0-339933?style=flat-square&logo=node.js&logoColor=339933)](https://nodejs.org/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-8.0-47A248?style=flat-square&logo=mongodb&logoColor=47A248)](https://mongodb.com/)
+[![dotenv](https://img.shields.io/badge/dotenv-16.4.5-ECD53F?style=flat-square&logo=dotenv&logoColor=ECD53F)](https://www.npmjs.com/package/dotenv)
+[![express.json](https://img.shields.io/badge/express.json-Express%205-F7DF1E?style=flat-square&logo=javascript&logoColor=F7DF1E)](https://expressjs.com/)
 
 </div>
 
