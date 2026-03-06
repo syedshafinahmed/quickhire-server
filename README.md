@@ -1,4 +1,4 @@
-# HireBD Backend API
+# QuickHire Backend API
 
 A RESTful API server built with **Node.js**, **Express**, and **MongoDB** for a job board platform. It handles job listings, user registration, and job applications.
 
@@ -74,7 +74,7 @@ The server will start on **port 3000** by default.
   "company": "Qtec Solution Limited",
   "location": "Dhaka",
   "category": "Full-Time",
-  "description": "We are looking for a skilled frontend developer...",
+  "description": "We are looking for a skilled...",
   "created_at": "2026-03-04T15:23:31.578+00:00"
 }
 ```
@@ -96,7 +96,7 @@ The server will start on **port 3000** by default.
   "name": "Syed Shafin Ahmed",
   "email": "shafinahmed.cse@gmail.com",
   "photoURL": "https://i.postimg.cc/kXRbFrbG/IMG-20240908-004438-350.jpg",
-  "role"; "applicant",
+  "role": "applicant",
   "created_at": "2026-03-04T15:23:31.578+00:00"
 }
 ```
