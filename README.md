@@ -69,12 +69,13 @@ The server will start on **port 3000** by default.
 
 ```json
 {
-  "title": "Frontend Developer",
-  "company": "TechCorp",
-  "category": "Engineering",
+  "logo": "https://i.postimg.cc/htk3kLr3/l1.png"
+  "title": "Associate Software Engineer",
+  "company": "Qtec Solution Limited",
   "location": "Dhaka",
-  "salary": "60000",
-  "description": "We are looking for a skilled frontend developer..."
+  "category": "Full-Time",
+  "description": "We are looking for a skilled frontend developer...",
+  "created_at": "2026-03-04T15:23:31.578+00:00"
 }
 ```
 
@@ -92,9 +93,11 @@ The server will start on **port 3000** by default.
 
 ```json
 {
-  "name": "Jane Doe",
-  "email": "jane@example.com",
-  "photoURL": "https://example.com/photo.jpg"
+  "name": "Syed Shafin Ahmed",
+  "email": "shafinahmed.cse@gmail.com",
+  "photoURL": "https://i.postimg.cc/kXRbFrbG/IMG-20240908-004438-350.jpg",
+  "role"; "applicant",
+  "created_at": "2026-03-04T15:23:31.578+00:00"
 }
 ```
 
@@ -113,12 +116,13 @@ The server will start on **port 3000** by default.
 ```json
 {
   "jobId": "64f1a2b3c4d5e6f7a8b9c0d1",
-  "jobTitle": "Frontend Developer",
-  "company": "TechCorp",
-  "applicantName": "Jane Doe",
-  "applicantEmail": "jane@example.com",
-  "resumeLink": "https://drive.google.com/my-resume",
-  "coverLetter": "I am excited to apply for this role..."
+  "jobTitle": "Associate Software Engineer",
+  "company": "Qtec Solution Limited",
+  "applicantName": "Syed Shafin Ahmed",
+  "applicantEmail": "shafinahmed.cse@gmail.com",
+  "resumeLink": "https://drive.google.com/file/d/1jlxSo9RKw-zCk7Ry-uU-IHGvmLZj8POQ/view?usp=sharing",
+  "coverLetter": "I am to applying for the role...",
+  "created_at": "2026-03-04T15:23:31.578+00:00"
 }
 ```
 
