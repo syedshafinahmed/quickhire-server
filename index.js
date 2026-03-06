@@ -83,6 +83,21 @@ async function run() {
       }
     });
 
+    // Get all applications (admin view)
+    app.get("/applications/all", async (req, res) => {
+      try {
+        const allApplications = await applicationsCollection
+          .find()
+          .sort({ created_at: -1 }) // newest first
+          .toArray();
+
+        res.json(allApplications);
+      } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Failed to fetch applications" });
+      }
+    });
+
     // Register user endpoint
     app.post("/users", async (req, res) => {
       try {
