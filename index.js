@@ -143,6 +143,18 @@ async function run() {
         res.status(500).json({ error: "Server error" });
       }
     });
+    
+    // Get all users endpoint
+    app.get("/users/all", async (req, res)=> {
+      try{
+        const allUsers = await usersCollection.find().sort({created_at: -1}).toArray();
+        res.json(allUsers); 
+      }
+      catch(err){
+        console.error(err);
+        res.status(500).json({error: "Failed to fetch users"});
+      }
+    });
 
     // Endpoint to handle job postings
     app.post("/jobs", async (req, res) => {
