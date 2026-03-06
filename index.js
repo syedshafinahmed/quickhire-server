@@ -66,6 +66,23 @@ async function run() {
       }
     });
 
+    // Get applications by user email
+    app.get("/applications", async (req, res) => {
+      try {
+        const { email } = req.query;
+        if (!email) return res.status(400).json({ error: "Email is required" });
+
+        const userApplications = await applicationsCollection
+          .find({ applicantEmail: email })
+          .toArray();
+
+        res.json(userApplications);
+      } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Server error" });
+      }
+    });
+
     // Register user endpoint
     app.post("/users", async (req, res) => {
       try {
